@@ -64,3 +64,4 @@ jobs:
       - name: PHPStan (Static Analysis)
         run: ./vendor/bin/phpstan analyse --no-progress
         # ← Kalau ada error tipe/data → workflow FAIL
+         # ← Kalau ada error tipe/data → workflow FAIL

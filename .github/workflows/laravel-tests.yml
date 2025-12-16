@@ -36,7 +36,7 @@ jobs:
         run: cp .env.example .env
 
       - name: Install Composer dependencies
-  run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --optimize-autoloader
+         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --optimize-autoloader
 
       - name: Generate app key
         run: php artisan key:generate

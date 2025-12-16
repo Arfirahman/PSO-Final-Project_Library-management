@@ -1,4 +1,6 @@
-<?php // Tidak ada spasi, baris kosong, atau karakter lain sebelum ini
+<?php
+
+// Tidak ada spasi, baris kosong, atau karakter lain sebelum ini
 
 namespace App\Models; // Ini adalah baris kode pertama setelah <?php
 

@@ -10,14 +10,13 @@ class AuthMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
         // Hanya memeriksa apakah user_id ada di sesi
-        if (!session('user_id')) {
+        if (! session('user_id')) {
             return redirect()->route('login');
         }
 

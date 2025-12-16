@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Database\Seeder; // Tambahkan ini
 use Illuminate\Support\Facades\Hash; // Tambahkan ini
-use App\Models\User; // Tambahkan ini
 
 class UserSeeder extends Seeder
 {

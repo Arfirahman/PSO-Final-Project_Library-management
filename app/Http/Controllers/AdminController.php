@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Book;
-use App\Models\User;
 use App\Models\Borrow;
-use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon; // Import Carbon untuk manipulasi tanggal
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash; // Import Carbon untuk manipulasi tanggal
 
 class AdminController extends Controller
 {
@@ -53,6 +53,7 @@ class AdminController extends Controller
     public function booksIndex()
     {
         $books = Book::all();
+
         return view('admin.books.index', compact('books'));
     }
 
@@ -72,7 +73,7 @@ class AdminController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
-            'year' => 'required|integer|min:1000|max:' . (date('Y') + 1),
+            'year' => 'required|integer|min:1000|max:'.(date('Y') + 1),
             'available' => 'required|integer|min:0',
         ]);
 
@@ -97,7 +98,7 @@ class AdminController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
-            'year' => 'required|integer|min:1000|max:' . (date('Y') + 1),
+            'year' => 'required|integer|min:1000|max:'.(date('Y') + 1),
             'available' => 'required|integer|min:0',
         ]);
 
@@ -123,6 +124,7 @@ class AdminController extends Controller
     {
         $users = User::where('role', 'user')->get();
         $books = Book::where('available', '>', 0)->get();
+
         return view('admin.borrows.create_form', compact('users', 'books'));
     }
 
@@ -139,7 +141,7 @@ class AdminController extends Controller
 
         $book = Book::find($request->book_id);
 
-        if (!$book || $book->available <= 0) {
+        if (! $book || $book->available <= 0) {
             return redirect()->back()->with('error', 'Book is not available for borrowing.');
         }
 
@@ -161,6 +163,7 @@ class AdminController extends Controller
     public function borrowsIndex()
     {
         $borrows = Borrow::with(['user', 'book'])->get();
+
         return view('admin.borrows.index', compact('borrows'));
     }
 
@@ -203,6 +206,7 @@ class AdminController extends Controller
     public function usersIndex()
     {
         $users = User::all();
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -221,7 +225,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'role' => 'required|in:admin,user',
             'age' => 'nullable|integer|min:0',
             'phone_number' => 'nullable|string|max:20',
@@ -245,6 +249,7 @@ class AdminController extends Controller
     public function usersDestroy(User $user)
     {
         $user->delete();
+
         return redirect()->route('admin.users.index')->with('success', 'User successfully deleted!');
     }
 }

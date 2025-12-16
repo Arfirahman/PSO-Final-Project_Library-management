@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ Route::middleware(['auth.basic'])->group(function () {
         // Routes for User Management by Admin
         Route::get('/users/create', [AdminController::class, 'usersCreate'])->name('users.create'); // Show add user form
         Route::post('/users', [AdminController::class, 'usersStore'])->name('users.store');     // Store new user
-        
+
         // NEW: Routes for User List, Edit, Delete
         Route::get('/users', [AdminController::class, 'usersIndex'])->name('users.index'); // User list
         Route::get('/users/{user}/edit', [AdminController::class, 'usersEdit'])->name('users.edit'); // Show edit form
@@ -55,7 +55,6 @@ Route::middleware(['auth.basic'])->group(function () {
         Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
         // Routes for Book Borrowing
         Route::post('/borrow', [UserController::class, 'storeBorrow'])->name('borrow.store');
-
 
         // Route for Borrowing Confirmation Page
         Route::get('/borrow/confirmation', [UserController::class, 'borrowConfirmation'])->name('borrow.confirmation');
@@ -77,6 +76,7 @@ Route::middleware(['auth.basic'])->group(function () {
                 return redirect()->route('user.dashboard');
             }
         }
+
         return redirect()->route('login');
     })->name('home');
 });

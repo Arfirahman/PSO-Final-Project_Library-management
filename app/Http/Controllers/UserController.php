@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Borrow;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -53,7 +53,7 @@ class UserController extends Controller
         $book = Book::find($request->book_id);
 
         // Check if the book is available
-        if (!$book || $book->available <= 0) {
+        if (! $book || $book->available <= 0) {
             return redirect()->back()->with('error', 'Book is not available for borrowing.');
         }
 
@@ -79,6 +79,7 @@ class UserController extends Controller
     {
         return view('user.borrow_confirmation');
     }
+
     /**
      * Handle returning a borrowed book by the user.
      */
@@ -91,7 +92,7 @@ class UserController extends Controller
             ->whereNull('return_date')
             ->first();
 
-        if (!$borrow) {
+        if (! $borrow) {
             return redirect()->back()->with('error', 'Borrow record not found or already returned.');
         }
 

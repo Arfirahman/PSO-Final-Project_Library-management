@@ -20,7 +20,7 @@ class AuthController extends Controller
 
         if ($user && Hash::check($credentials['password'], $user->password)) {
             session(['user_id' => $user->id, 'role' => $user->role]);
-            \Log::info('Session set: user_id=' . $user->id . ', role=' . $user->role); // Debug
+            \Log::info('Session set: user_id='.$user->id.', role='.$user->role); // Debug
             // dd(session()->all()); // Cek session
             if ($user->role == 'admin') {
                 return redirect()->route('admin.dashboard');
@@ -35,6 +35,7 @@ class AuthController extends Controller
     public function logout()
     {
         session()->forget(['user_id', 'role']);
+
         return redirect()->route('login');
     }
 }

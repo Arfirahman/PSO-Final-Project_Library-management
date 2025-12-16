@@ -54,10 +54,13 @@ jobs:
           DB_DATABASE: laravel_test
           DB_USERNAME: laravel
           DB_PASSWORD: laravel
-        run: php artisan test     # ← PASTI tanpa --coverage
+        run: php artisan test
+        # ← HAPUS || true! Kalau test gagal → workflow langsung FAIL (merah)
 
-      - name: Laravel Pint
-        run: ./vendor/bin/pint --test || true
+      - name: Laravel Pint (Code Style Check)
+        run: ./vendor/bin/pint --test
+        # ← Kalau ada style error → workflow FAIL
 
-      - name: PHPStan
-        run: ./vendor/bin/phpstan analyse --no-progress || true
+      - name: PHPStan (Static Analysis)
+        run: ./vendor/bin/phpstan analyse --no-progress
+        # ← Kalau ada error tipe/data → workflow FAIL

@@ -79,4 +79,31 @@ class UserController extends Controller
     {
         return view('user.borrow_confirmation');
     }
+    /**
+     * Handle returning a borrowed book by the user.
+     */
+    public function returnBorrow($borrowId)
+    {
+        // Find the borrow record and ensure it belongs to the logged-in user
+        $loggedInUserId = session('user_id');
+        $borrow = Borrow::where('id', $borrowId)
+            ->where('user_id', $loggedInUserId)
+            ->whereNull('return_date')
+            ->first();
+
+        if (!$borrow) {
+            return redirect()->back()->with('error', 'Borrow record not found or already returned.');
+        }
+
+        // Set the return date to now
+        $borrow->return_date = now();
+        $borrow->save();
+
+        // Increment the book's available count
+        if ($borrow->book) {
+            $borrow->book->increment('available');
+        }
+
+        return redirect()->back()->with('success', 'Book returned successfully!');
+    }
 }

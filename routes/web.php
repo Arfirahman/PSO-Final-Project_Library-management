@@ -56,8 +56,12 @@ Route::middleware(['auth.basic'])->group(function () {
         // Routes for Book Borrowing
         Route::post('/borrow', [UserController::class, 'storeBorrow'])->name('borrow.store');
 
+
         // Route for Borrowing Confirmation Page
         Route::get('/borrow/confirmation', [UserController::class, 'borrowConfirmation'])->name('borrow.confirmation');
+
+        // Route for returning a borrowed book
+        Route::post('/borrow/{borrow}/return', [UserController::class, 'returnBorrow'])->name('borrow.return');
 
         // Routes for User Borrowing History (future)
         // Route::get('/history', [UserController::class, 'history'])->name('history');

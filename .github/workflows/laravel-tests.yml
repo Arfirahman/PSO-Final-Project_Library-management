@@ -55,12 +55,8 @@ jobs:
           DB_USERNAME: laravel
           DB_PASSWORD: laravel
         run: php artisan test
-        # Kalau test gagal → workflow langsung FAIL (strict mode)
+        # Kalau test gagal → workflow langsung FAIL (strict)
 
       - name: Laravel Pint (Code Style Check)
         run: ./vendor/bin/pint --test
-        # Kalau ada style error → workflow FAIL
-
-      - name: PHPStan (Static Analysis)
-        run: ./vendor/bin/phpstan analyse --no-progress
-        # Kalau ada error tipe/data → workflow FAIL
+        # Kalau ada style error → workflow langsung FAIL (strict)

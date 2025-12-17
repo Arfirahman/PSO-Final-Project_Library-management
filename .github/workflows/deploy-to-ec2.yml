@@ -23,9 +23,9 @@ jobs:
           port: 22
           script: |
             # Set variabel
-            REPO_URL="https://github.com/arfi5026231119/pso-final-library-management.git"
+            REPO_URL="https://github.com/arfirahman/pso-final-library-management.git"
             REPO_PATH="/home/ubuntu/pso-final-library-management"
-            IMAGE_NAME="ghcr.io/arfi5026231119/pso-final-library-management:latest"
+            IMAGE_NAME="ghcr.io/arfirahman/pso-final-library-management:latest"
             CONTAINER_NAME="laravel-app"
             
             # Step 1: Clone atau Pull repo terbaru

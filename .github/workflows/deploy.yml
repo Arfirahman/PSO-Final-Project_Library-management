@@ -25,6 +25,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Convert repo to lowercase
+        id: lowercase_repo
+        run: |
+          echo "repo=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -37,11 +42,11 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ steps.lowercase_repo.outputs.repo }}:latest
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
 
       - name: Success!
         run: |
           echo "✅ Docker image successfully pushed to GHCR!"
-          echo "Image: ghcr.io/${{ github.repository }}:latest"
+          echo "Image: ghcr.io/${{ steps.lowercase_repo.outputs.repo }}:latest"

@@ -22,10 +22,51 @@ jobs:
           key: ${{ secrets.AWS_SSH_KEY }}
           port: 22
           script: |
-            cd /home/ec2-user/pso-final-library-management   # 99% ini path kalian, coba dulu
-            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-            docker compose down || true
-            docker pull ghcr.io/arfi5026231119/pso-final-library-management:latest
-            docker compose up -d
-            docker system prune -f
-            echo "🚀 DEPLOY SELESAI! Fitur baru sudah live di http://3.236.150.30"
+            # Set variabel
+            REPO_URL="https://github.com/arfi5026231119/pso-final-library-management.git"
+            REPO_PATH="/home/ubuntu/pso-final-library-management"
+            IMAGE_NAME="ghcr.io/arfi5026231119/pso-final-library-management/laravel:latest"
+            CONTAINER_NAME="laravel-app"
+            
+            # Step 1: Clone atau Pull repo terbaru
+            if [ -d "$REPO_PATH" ]; then
+              echo "📦 Repository exists, pulling latest changes..."
+              cd "$REPO_PATH"
+              git pull origin main
+            else
+              echo "📦 Cloning repository..."
+              git clone "$REPO_URL" "$REPO_PATH"
+              cd "$REPO_PATH"
+            fi
+            
+            # Step 2: Login ke GHCR
+            echo "🔐 Logging in to GHCR..."
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # Step 3: Pull image terbaru
+            echo "📥 Pulling latest Docker image..."
+            docker pull "$IMAGE_NAME"
+            
+            # Step 4: Stop dan remove container lama
+            echo "🛑 Stopping old container..."
+            docker stop "$CONTAINER_NAME" || true
+            docker rm "$CONTAINER_NAME" || true
+            
+            # Step 5: Run container baru dengan image terbaru
+            echo "🚀 Starting new container..."
+            docker run -d \
+              --name "$CONTAINER_NAME" \
+              -p 80:80 \
+              -p 443:443 \
+              -e APP_ENV=production \
+              -e APP_DEBUG=false \
+              "$IMAGE_NAME"
+            
+            # Step 6: Cleanup
+            echo "🧹 Cleaning up old images..."
+            docker system prune -af --volumes
+            
+            # Step 7: Verify
+            echo "✅ Deployment complete!"
+            docker ps | grep "$CONTAINER_NAME"
+            echo "🎉 New feature should be live at http://3.236.150.30"

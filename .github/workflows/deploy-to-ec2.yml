@@ -43,37 +43,31 @@ jobs:
             
             # Step 1b: Create .env file (hardcoded - ensures it's always present)
             echo "📝 Creating .env file..."
-            cat > /home/ubuntu/.env << 'ENVFILE'
+            tee /home/ubuntu/.env > /dev/null << 'EOF'
 APP_NAME=Laravel
 APP_ENV=production
 APP_KEY=base64:NiKY3YELiZkusNKH2/ERzksMB5jGppefFv//VFNcW4o=
 APP_DEBUG=false
 APP_URL=http://3.236.150.30
-
 LOG_CHANNEL=stack
 LOG_DEPRECATIONS_CHANNEL=null
 LOG_LEVEL=debug
-
 DB_CONNECTION=pgsql
 DB_HOST=terraform-20251202201953247500000001.cij6cyq6ii19.us-east-1.rds.amazonaws.com
 DB_PORT=5432
 DB_DATABASE=library_db
 DB_USERNAME=postgres
 DB_PASSWORD=swagpapi101
-
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
 FILESYSTEM_DISK=local
 QUEUE_CONNECTION=sync
 SESSION_DRIVER=file
 SESSION_LIFETIME=120
-
 MEMCACHED_HOST=127.0.0.1
-
 REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
-
 MAIL_MAILER=smtp
 MAIL_HOST=mailpit
 MAIL_PORT=1025
@@ -82,13 +76,12 @@ MAIL_PASSWORD=null
 MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS="hello@example.com"
 MAIL_FROM_NAME="Laravel"
-
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_DEFAULT_REGION=us-east-1
 AWS_BUCKET=
 AWS_USE_PATH_STYLE_ENDPOINT=false
-ENVFILE
+EOF
             chmod 644 /home/ubuntu/.env
             echo "✅ .env file created successfully"
             

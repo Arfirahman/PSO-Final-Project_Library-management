@@ -41,6 +41,14 @@ jobs:
               cd "$REPO_PATH"
             fi
             
+            # Step 1b: Create .env file from GitHub Secret (always recreate to ensure latest)
+            echo "📝 Creating .env file from GitHub Secret..."
+            cat > /home/ubuntu/.env << 'ENVFILE'
+${{ secrets.ENV_FILE }}
+ENVFILE
+            chmod 644 /home/ubuntu/.env
+            echo "✅ .env file created successfully"
+            
             # Step 2: Login ke GHCR
             echo "🔐 Logging in to GHCR..."
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -60,9 +68,20 @@ jobs:
               --name "$CONTAINER_NAME" \
               -p 80:80 \
               -p 443:443 \
+              -v /home/ubuntu/.env:/var/www/html/.env:ro \
               -e APP_ENV=production \
               -e APP_DEBUG=false \
               "$IMAGE_NAME"
+            
+            # Wait for container to start
+            sleep 5
+            
+            # Step 5b: Run Laravel setup commands
+            echo "⚙️  Running Laravel setup commands..."
+            docker exec "$CONTAINER_NAME" php artisan key:generate --force || true
+            docker exec "$CONTAINER_NAME" php artisan cache:clear || true
+            docker exec "$CONTAINER_NAME" php artisan config:clear || true
+            docker exec "$CONTAINER_NAME" chmod -R 775 /var/www/html/storage || true
             
             # Step 6: Cleanup
             echo "🧹 Cleaning up old images..."

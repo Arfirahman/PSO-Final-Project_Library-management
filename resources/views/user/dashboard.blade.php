@@ -5,9 +5,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Select2 CSS for searchable select -->
-    <!-- To disable Search Book feature for CI/CD, comment from here -->
+    <!-- Search Book feature for CI/CD -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
-    <!-- To here -->
     <style>
         /* Custom style to make Select2 look like Tailwind input */
         .select2-container--default .select2-selection--single {
@@ -124,11 +123,9 @@
                         <!--
                             We use Select2 JS library to make this dropdown searchable.
                             This helps users quickly find a book by typing its title or author.
-                            To disable Search Book feature for CI/CD, comment from here (select2-related):
                         -->
                             <!--
-                                OLD: Initial dropdown (not searchable, plain HTML select)
-                                To compare, comment/uncomment this block.
+                                OLD: Initial dropdown
                             -->
                             <!-- Initial Dropdown Start -->
                             <select name="book_id" id="book_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('book_id') border-red-500 @enderror" required>
@@ -139,11 +136,9 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <!-- Initial Dropdown End -->
+                            <!-- OLD -->
                             <!--                             
                                 NEW: Searchable dropdown using Select2 JS library
-                                This helps users quickly find a book by typing its title or author.
-                                To disable Search Book feature for CI/CD, comment from here (select2-related):
                             -->
                             <!-- <select name="book_id" id="book_id" class="w-full @error('book_id') border-red-500 @enderror" required>
                                 <option value="">Select a Book</option>
@@ -153,8 +148,7 @@
                                     </option>
                                 @endforeach
                             </select> -->
-                            <!-- To here -->
-                        <!-- To here -->
+                            <!-- NEW -->
                         @error('book_id')
                             <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
                         @enderror
@@ -213,7 +207,7 @@
                                 <div class="text-sm font-medium whitespace-nowrap flex flex-col items-end gap-2">
                                     @if($borrow->return_date === null)
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full mb-1">Currently Borrowed</span>
-                                        <!-- To disable Return Book feature for CI/CD, comment from here -->
+                                        <!-- Return Book feature for CI/CD, comment from here -->
                                         <!-- <form action="{{ route('user.borrow.return', $borrow->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to return this book?');">
                                             @csrf
                                             <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs">Return Book</button>
@@ -230,7 +224,7 @@
             </div>
         </div>
     </div>
-    <!-- To disable Search Book feature for CI/CD, comment from here -->
+    <!-- Search Book feature for CI/CD -->
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
     <!-- Custom JS for dashboard (optional, for further customizations) -->
@@ -250,6 +244,6 @@
             });
         });
     </script> -->
-    <!-- To here -->
+    <!-- Search Book Feature -->
 </body>
 </html>

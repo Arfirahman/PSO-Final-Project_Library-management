@@ -114,7 +114,6 @@ jobs:
             
             # Step 5b: Run Laravel setup commands
             echo "⚙️  Running Laravel setup commands..."
-            docker exec "$CONTAINER_NAME" php artisan key:generate --force || true
             docker exec "$CONTAINER_NAME" php artisan cache:clear || true
             docker exec "$CONTAINER_NAME" php artisan config:clear || true
             docker exec "$CONTAINER_NAME" chmod -R 775 /var/www/html/storage || true

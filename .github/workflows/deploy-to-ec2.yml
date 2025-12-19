@@ -43,9 +43,9 @@ jobs:
             
             # Step 1b: Create .env file from GitHub Secret (always recreate to ensure latest)
             echo "📝 Creating .env file from GitHub Secret..."
-            cat > /home/ubuntu/.env << 'ENVFILE'
+            cat > /home/ubuntu/.env << EOF
 ${{ secrets.ENV_FILE }}
-ENVFILE
+EOF
             chmod 644 /home/ubuntu/.env
             echo "✅ .env file created successfully"
             

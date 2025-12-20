@@ -1,68 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Library Management System with Automated CI/CD Pipeline
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Final Project for Pengembangan Sistem dan Operasi (PSO) Course – DevOps Track** **Group 3 IUP Class – Institut Teknologi Sepuluh Nopember**
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 👥 Team Members
+* **Arfiandra Rahman Aziz** (5026231119)
+* **Razza Ibrahmwibowo Muktiadi** (5026231224)
+* **Shifly Taysir Setiawan** (5026231046)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Live Production URL**: [http://3.236.150.30/login](http://3.236.150.30/login)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📖 Project Overview
+This is a web-based **Library Management System** built with Laravel 10 and PostgreSQL. It supports user authentication, book CRUD operations, borrowing/return functionality, and advanced features like a searchable dropdown for book selection.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The project features a fully automated **CI/CD pipeline** using GitHub Actions, Docker, and Terraform on AWS. This ensures that every code change is tested, containerized, and deployed to production with minimal manual intervention.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## ✨ Features
+* **Role-based Access**: Separate dashboards for Admin and User roles.
+* **Inventory Management**: Full CRUD capabilities for library books.
+* **Transaction System**: Automated borrowing and return workflows.
+* **Modern UI**: Built with Bootstrap for a fully responsive experience.
+* **Infrastructure as Code**: AWS resources managed entirely via Terraform.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## 🛠️ Local Development Setup Steps
+To set up this project on your local machine, follow these steps in order:
 
-## Contributing
+1. **Clone and Install**: Open your terminal and run `git clone https://github.com/Arfirahman/pso-final-library-management.git`. Navigate into the folder and run `composer install` to handle PHP dependencies, followed by `npm install && npm run build` for the frontend assets.
+2. **Environment Configuration**: Create your environment file by running `cp .env.example .env`. Open the `.env` file and update the `DB_CONNECTION=pgsql` section with your local PostgreSQL host, database name, username, and password.
+3. **Database Initialization**: Generate your unique application key using `php artisan key:generate`. Then, prepare your database schema and sample data by running `php artisan migrate --seed`.
+4. **Launch**: Start the local development server with `php artisan serve`. You can now access the system at `http://localhost:8000`.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🐳 Docker Deployment Steps
+If you prefer to run the application using containers, follow these steps:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* **Manual Build**: Execute `docker build -t library-app .` to create the image. Then, run the container using `docker run -d -p 8000:80 --env-file .env library-app`.
+* **Automated Orchestration**: If you have Docker Compose installed, simply run `docker-compose up -d --build` to automatically build and start the application and its dependencies.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ☁️ AWS Infrastructure & CI/CD Steps
+To deploy this system to a live production environment on AWS, follow this automated workflow:
 
-## License
+1. **Provisioning**: Go to the GitHub Actions tab in the repository, select the **terraform.yml** workflow, and run it manually. This uses Terraform to provision the EC2 instance and RDS PostgreSQL database on AWS.
+2. **Automated Pipeline**: Once the infrastructure is ready, any push to the `main` branch triggers the **deploy.yml** and **deploy-to-ec2.yml** workflows. These workflows automatically run PHPUnit/Pest tests, build a multi-stage Docker image, push it to the GitHub Container Registry (GHCR), and pull it onto the EC2 instance for a zero-downtime update.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
 
-CI triggered on [tanggal sekarang]
+## ⚙️ Pipeline Summary
+| Stage | Workflow File | Description |
+| :--- | :--- | :--- |
+| **Testing** | `laravel-tests.yml` | Validates code via PHPUnit/Pest with a PostgreSQL service |
+| **Build & Push** | `deploy.yml` | Builds the Docker image and pushes to GHCR |
+| **Deploy** | `deploy-to-ec2.yml` | Updates the EC2 instance with the latest image via SSH |
+| **Infrastructure** | `terraform.yml` | Manages AWS EC2 & RDS resources via Terraform |
+
+---
+
+## 📁 Repository Structure
+* `app/`: Application logic (Controllers, Models)
+* `database/`: Migrations and seeders
+* `resources/`: Blade views and frontend source
+* `.github/workflows/`: Automation scripts
+* `terraform/`: Infrastructure as Code files
+* `Dockerfile`: Container configuration
+
+---
+
+## 📜 License
+This project is for academic purposes only.
+© 2025 Group 3 IUP Class – Institut Teknologi Sepuluh Nopember
